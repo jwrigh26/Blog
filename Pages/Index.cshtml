@@ -1,0 +1,24 @@
+﻿@page
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+@{
+    ViewData["Title"] = "Home";
+    var isDev = Env.IsDevelopment();
+}
+
+<h1>Boredom Game Dashboard</h1>
+
+<!-- Existing Timezone Island Mount Point -->
+<div id="island-timezone"></div>
+
+<!-- New BLE Chunker Island Mount Point -->
+<div id="island-ble-chunker"></div>
+
+@section Scripts {
+    <script type="module"
+            src="@(isDev ? "http://localhost:5173/src/islands/timezone.ts" : "~/dist/island-timezone.js")"
+            asp-append-version="true"></script>
+            
+    <script type="module"
+            src="@(isDev ? "http://localhost:5173/src/islands/ble-chunker.ts" : "~/dist/island-ble-chunker.js")"
+            asp-append-version="true"></script>
+}

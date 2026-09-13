@@ -1,0 +1,15 @@
+@page
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+@{
+    ViewData["Title"] = "Game Loop";
+    var isDev = Env.IsDevelopment();
+}
+
+<!-- Standalone App Container[cite: 2, 5] -->
+<div id="app-game"></div>
+
+@section Scripts {
+    <script type="module" 
+            src="@(isDev ? "http://localhost:5173/src/apps/game/main.ts" : "~/dist/app-game.js")" 
+            asp-append-version="true"></script>
+}

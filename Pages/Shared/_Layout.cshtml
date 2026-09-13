@@ -1,0 +1,20 @@
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Blog</title>
+
+    @if (Env.IsDevelopment())
+    {
+      <!-- Enables live component reloads without resetting state -->
+      <script type="module" src="http://localhost:5173/@@vite/client"></script>
+    }
+</head>
+<body>
+    @RenderBody()
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
