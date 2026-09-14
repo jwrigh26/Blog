@@ -13,12 +13,29 @@
 <!-- New BLE Chunker Island Mount Point -->
 <div id="island-ble-chunker"></div>
 
+<!-- React Island Mount -->
+<div id="island-react"></div>
+
 @section Scripts {
+   @if (isDev)
+    {
+        <script type="module" src="http://localhost:5173/@@vite/client"></script>
+        <script type="module">
+            import RefreshRuntime from 'http://localhost:5173/@@react-refresh'
+            RefreshRuntime.injectIntoGlobalHook(window)
+            window.$RefreshReg$ = () => {}
+            window.$RefreshSig$ = () => (type) => type
+            window.__vite_plugin_react_preamble_installed__ = true
+        </script>
+    } 
     <script type="module"
             src="@(isDev ? "http://localhost:5173/src/islands/timezone.ts" : "~/dist/island-timezone.js")"
             asp-append-version="true"></script>
             
     <script type="module"
             src="@(isDev ? "http://localhost:5173/src/islands/ble-chunker.ts" : "~/dist/island-ble-chunker.js")"
+            asp-append-version="true"></script>
+
+    <script type="module" src="@(isDev ? "http://localhost:5173/src/islands/hello-react.tsx" : "~/dist/island-react.js")"
             asp-append-version="true"></script>
 }

@@ -1,0 +1,7 @@
+/* src/islands/HelloWorld.css */
+.hello-card {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #007bff;
+  border-radius: 6px;
+}

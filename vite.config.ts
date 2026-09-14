@@ -49,7 +49,14 @@ export default defineConfig({
           import.meta.dirname,
           "src/islands/ble-chunker.ts",
         ),
+        "island-react": path.resolve(
+          import.meta.dirname,
+          "src/islands/hello-react.ts",
+        ),
         "app-game": path.resolve(import.meta.dirname, "src/apps/game/main.ts"),
+      },
+      output: {
+        entryFileNames: "[name].js",
       },
     },
   },
