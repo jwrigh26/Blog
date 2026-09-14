@@ -1,21 +1,26 @@
 <template>
   <div class="clock-card">
-    <h3>Tokoy Tracker</h3>
-    <p>{{ tokoyTime }}</p>
+    <h3>Tokyo Time</h3>
+    <p>{{ tokyoTime }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 
-const tokoyTime = ref("");
+const tokyoTime = ref("");
 let timer: ReturnType<typeof setInterval> | undefined = undefined;
 
 const updateTime = () => {
-  tokoyTime.value = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Tokoy",
-    dateStyle: "medium",
-    timeStyle: "medium",
+  tokyoTime.value = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
   }).format(new Date());
 };
 
