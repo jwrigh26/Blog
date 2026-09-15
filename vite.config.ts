@@ -3,6 +3,8 @@ import vue from "@vitejs/plugin-vue";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
+const blogRoot = import.meta.dirname;
+
 // Module Driven Request Architecture:
 // Vite acts as an ES MOdule (ESM) HTTP server rather than a framework-bound compiler.
 // When ASP.NET Core Razor pages requests are made:
@@ -26,7 +28,12 @@ import path from "path";
 //  `wwwroot/dist`.
 
 export default defineConfig({
-  plugins: [vue(), react()],
+  plugins: [
+    vue(),
+    react({
+      include: /\.(js|jsx|ts|tsx)$/,
+    }),
+  ],
   server: {
     port: 5173,
     strictPort: true,
@@ -41,19 +48,13 @@ export default defineConfig({
     manifest: true,
     rolldownOptions: {
       input: {
-        "island-timezone": path.resolve(
-          import.meta.dirname,
-          "src/islands/timezone.ts",
-        ),
+        "island-timezone": path.resolve(blogRoot, "src/islands/timezone.ts"),
         "island-ble-chunker": path.resolve(
-          import.meta.dirname,
+          blogRoot,
           "src/islands/ble-chunker.ts",
         ),
-        "island-react": path.resolve(
-          import.meta.dirname,
-          "src/islands/hello-react.ts",
-        ),
-        "app-game": path.resolve(import.meta.dirname, "src/apps/game/main.ts"),
+        "island-react": path.resolve(blogRoot, "src/islands/hello-react.ts"),
+        "app-game": path.resolve(blogRoot, "src/apps/game/main.ts"),
       },
       output: {
         entryFileNames: "[name].js",

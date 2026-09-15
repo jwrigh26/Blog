@@ -5,9 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=boredeomgame.db")
-);
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=blog.db"));
 
 var app = builder.Build();
 

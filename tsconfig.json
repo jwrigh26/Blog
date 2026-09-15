@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true, // Required for "bunder" rsoltuion (Vite handles output)
     "strict": true,
     "jsx": "react-jsx", // Required for React 18+ TSX files
     "skipLibCheck": true, // Skips type checking of .d.ts files (prevents crashes)
