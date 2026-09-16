@@ -17,7 +17,8 @@
 <div id="island-react"></div>
 
 @section Scripts {
-   @if (isDev)
+    @* React Fast Refresh Preamble (Required only in Development mode for React islands/components) *@
+    @if (Env.IsDevelopment())
     {
         <script type="module" src="http://localhost:5173/@@vite/client"></script>
         <script type="module">
@@ -28,14 +29,9 @@
             window.__vite_plugin_react_preamble_installed__ = true
         </script>
     } 
-    <script type="module"
-            src="@(isDev ? "http://localhost:5173/src/islands/timezone.ts" : "~/dist/island-timezone.js")"
-            asp-append-version="true"></script>
-            
-    <script type="module"
-            src="@(isDev ? "http://localhost:5173/src/islands/ble-chunker.ts" : "~/dist/island-ble-chunker.js")"
-            asp-append-version="true"></script>
 
-    <script type="module" src="@(isDev ? "http://localhost:5173/src/islands/hello-react.tsx" : "~/dist/island-react.js")"
-            asp-append-version="true"></script>
+    @* Clean, environment-aware Tag Helper script references *@
+    <vite-script src="~/src/islands/timezone.ts"></vite-script>
+    <vite-script src="~/src/islands/ble-chunker.ts"></vite-script>
+    <vite-script src="~/src/islands/hello-react.tsx"></vite-script>
 }

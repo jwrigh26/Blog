@@ -6,10 +6,17 @@
 }
 
 <!-- Standalone App Container[cite: 2, 5] -->
+@* <script type="module" src="http://localhost:5173/src/apps/game/main.ts"></script> *@
 <div id="app-game"></div>
 
-@section Scripts {
+@* @section Scripts {
     <script type="module" 
             src="@(isDev ? "http://localhost:5173/src/apps/game/main.ts" : "~/dist/app-game.js")" 
             asp-append-version="true"></script>
+    
+} *@
+
+@section Scripts {
+    <!-- Automatically switches source URLs based on environment configuration -->
+    <vite-script src="~/src/apps/game/main.ts"></vite-script>
 }
