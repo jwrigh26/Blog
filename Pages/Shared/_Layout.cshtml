@@ -1,20 +1,25 @@
-@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
-
-<!DOCTYPE html>
+<!<!DOCTYPE>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Blog</title>
-
-    @if (Env.IsDevelopment())
-    {
-      <!-- Enables live component reloads without resetting state -->
-      <script type="module" src="http://localhost:5173/@@vite/client"></script>
-    }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Enable smooth cross-document page transition in moder browsers -->
+  <meta name="view-transition" content="same-origin" />
+  <title>@ViewData["Title"] - My Dev Blog</title>
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    @RenderBody()
-    @await RenderSectionAsync("Scripts", required: false)
+  <header class="site-header">
+    <nav>
+      <a href="/" class="brand">DevBlog</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+  <main class="main-content">
+      @RenderBody()
+  </main>
+
+  @await RenderSectionAsyn("Scripts", required: false)
 </body>
 </html>
+
