@@ -1,0 +1,27 @@
+@page "/Post/react-post" 
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+@{
+  ViewData["Title"] = "React Interactive Post"; var isDev = Env.IsDevelopment();
+}
+
+<article class="post-content">
+  <h1>Post With React 18.3 Interactive Island</h1>
+
+  <!-- React Mount Target -->
+  <div id="island-react"></div>
+</article>
+
+@section Scripts {
+  @if (isDev)
+  {
+    <script type="module" src="http://localhost:5173/@@vite/client"></script>
+    <script type="module">
+      import RefreshRuntime from "http://localhost:5173/@@react-refresh";
+      RefreshRuntime.injectIntoGlobalHook(window);
+      window.$RefreshReg$ = () => { };
+      window.$RefreshSig$ = () => (type) => type;
+      window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+  }
+  <script type="module" src="~/src/islands/hello-react.ts" asp-append-version="true"></script>
+}

@@ -1,0 +1,37 @@
+﻿@page "/Examples/home"
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+@{
+    ViewData["Title"] = "Home";
+    var isDev = Env.IsDevelopment();
+}
+
+<h1>Boredom Game Dashboard</h1>
+
+<!-- Existing Timezone Island Mount Point -->
+<div id="island-timezone"></div>
+
+<!-- New BLE Chunker Island Mount Point -->
+<div id="island-ble-chunker"></div>
+
+<!-- React Island Mount -->
+<div id="island-react"></div>
+
+@section Scripts {
+    @* React Fast Refresh Preamble (Required only in Development mode for React islands/components) *@
+    @if (Env.IsDevelopment())
+    {
+        <script type="module" src="http://localhost:5173/@@vite/client"></script>
+        <script type="module">
+            import RefreshRuntime from 'http://localhost:5173/@@react-refresh'
+            RefreshRuntime.injectIntoGlobalHook(window)
+            window.$RefreshReg$ = () => {}
+            window.$RefreshSig$ = () => (type) => type
+            window.__vite_plugin_react_preamble_installed__ = true
+        </script>
+    } 
+
+    @* Clean, environment-aware Tag Helper script references *@
+    <vite-script src="~/src/islands/timezone.ts"></vite-script>
+    <vite-script src="~/src/islands/ble-chunker.ts"></vite-script>
+    <vite-script src="~/src/islands/hello-react.tsx"></vite-script>
+}

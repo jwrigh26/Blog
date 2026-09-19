@@ -1,0 +1,14 @@
+@page "/Post/vue-post" 
+@{
+  ViewData["Title"] = "Vue Article";
+}
+
+<article class="post-content">
+  <h1>Post With Vue 3.0</h1>
+
+  <!-- Vue Mount Target -->
+  <div id="island-vue"></div>
+</article>
+@section Scripts {
+  <vite-script src="~/src/islands/hello-vue.ts"></vite-script>
+}
