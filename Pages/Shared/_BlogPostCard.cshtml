@@ -1,0 +1,11 @@
+@model IEnumerable<Blog.Pages.BlogPost>
+
+@foreach (var post in Model)
+{
+    <article class="post-card">
+      <h2>@post.Title</h2>
+      <p>@post.Summary</p>
+      <!-- Standard links trigger fresh page navigation -->
+      <a href="/Post/@post.Slug" class="read-more-btn">Read Article &rarr;</a>
+    </article>
+}

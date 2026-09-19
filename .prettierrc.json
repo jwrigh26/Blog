@@ -1,0 +1,14 @@
+{
+  "htmlWhitespaceSensitivity": "ignore",
+  "printWidth": 100,
+  "singleAttributePerLine": false,
+  "overrides": [
+    {
+      "files": ["*.cshtml", "*.razor"],
+      "options": {
+        "parser": "html",
+        "htmlWhitespaceSensitivity": "ignore"
+      }
+    }
+  ]
+}

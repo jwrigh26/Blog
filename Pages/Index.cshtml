@@ -1,37 +1,67 @@
-﻿@page
-@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
-@{
-    ViewData["Title"] = "Home";
-    var isDev = Env.IsDevelopment();
+﻿@page 
+@model IndexModel 
+@{ 
+  ViewData["Title"] = "Home"; 
 }
 
-<h1>Boredom Game Dashboard</h1>
-
-<!-- Existing Timezone Island Mount Point -->
-<div id="island-timezone"></div>
-
-<!-- New BLE Chunker Island Mount Point -->
-<div id="island-ble-chunker"></div>
-
-<!-- React Island Mount -->
-<div id="island-react"></div>
+<div class="blog-container">
+  <div id="post-wrapper">
+    <!-- Initial Sever-Rendered Posts -->
+    <partial name="_BlogPostCard" model="Model.Posts" />
+  </div>
+  <!-- Scroll Trigger Element -->
+  <div id="scroll-trigger" class="loading-indicator">
+    <span>Loading more articles ...</span>
+  </div>
+</div>
 
 @section Scripts {
-    @* React Fast Refresh Preamble (Required only in Development mode for React islands/components) *@
-    @if (Env.IsDevelopment())
-    {
-        <script type="module" src="http://localhost:5173/@@vite/client"></script>
-        <script type="module">
-            import RefreshRuntime from 'http://localhost:5173/@@react-refresh'
-            RefreshRuntime.injectIntoGlobalHook(window)
-            window.$RefreshReg$ = () => {}
-            window.$RefreshSig$ = () => (type) => type
-            window.__vite_plugin_react_preamble_installed__ = true
-        </script>
-    } 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let currentPage = 1;
+    let isLoading = false;
+    let hasMore = true;
 
-    @* Clean, environment-aware Tag Helper script references *@
-    <vite-script src="~/src/islands/timezone.ts"></vite-script>
-    <vite-script src="~/src/islands/ble-chunker.ts"></vite-script>
-    <vite-script src="~/src/islands/hello-react.tsx"></vite-script>
+    const postsWrapper = document.getElementById("post-wrapper");
+    const trigger = document.getElementById("scroll-trigger");
+
+    const observer = new IntersectionObserver(
+      async (entries) => {
+        const entry = entries[0];
+
+        if (entry.isIntersecting && !isLoading && hasMore) {
+          isLoading = true;
+          currentPage++;
+
+          try {
+            const response = await fetch(`/Index?handler=MorePosts&page=${currentPage}`);
+
+            if (response.status === 204) {
+              hasMore = false;
+              trigger.style.display = "none";
+              return;
+            }
+
+            // Safety check: handle backend server errors gracefully
+            if (!response.ok) {
+              throw new Error(`Server responded with status ${response.status}`);
+            }
+
+            const html = await response.text();
+            postsWrapper.insertAdjacentHTML("beforeend", html);
+          } catch (err) {
+            console.error("Error fetching more posts:", err);
+            // Revert the page increment if the request failed so it retries the same page next time
+            currentPage--;
+          } finally {
+            isLoading = false;
+          }
+        }
+      },
+      { rootMargin: "200px" },
+    );
+
+    observer.observe(trigger);
+  });
+</script>
 }
