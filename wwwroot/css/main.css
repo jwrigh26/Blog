@@ -1,0 +1,201 @@
+@layer reset, theme, base, components, utilities;
+
+/* ----------------------------------------------------
+   1. Theme & Custom Properties
+   ---------------------------------------------------- */
+
+@layer theme {
+  :root {
+    /* Enables OS-level dynamic color-scheme switching */
+    color-scheme: light dark;
+
+    /* Base Typography & System Stacks */
+    --font-sans:
+      "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Spacing Scale (8px rhythm) */
+    --size-0: 0;
+    --size-1: 0.25rem; /* 4px  - Micro tweaks */
+    --size-2: 0.5rem; /* 8px  - Baseline unit */
+    --size-3: 0.75rem; /* 12px - Intermediate step */
+    --size-4: 1rem; /* 16px - Base text / anchor */
+    --size-5: 1.25rem; /* 20px - Medium layouts */
+    --size-6: 1.5rem; /* 24px - Line-height alignment */
+    --size-7: 2rem; /* 32px - Large containers / headers */
+    --size-8: 2.5rem; /* 40px - Extra large gaps */
+    --size-9: 3rem; /* 48px - Display hero scales */
+
+    /* Semantic TOKES (Contextual Mapping)
+    /* Spacing / Layout System */
+    --spacing-xs: var(--size-2); /* 8px  */
+    --spacing-sm: var(--size-4); /* 16px */
+    --spacing-md: var(--size-6); /* 24px */
+    --spacing-lg: var(--size-7); /* 32px */
+    --spacing-xl: var(--size-9); /* 48px */
+
+    /* Typography Scale */
+    --font-size-sm: var(--size-3); /* 12px - Small captions */
+    --font-size-base: var(--size-4); /* 16px - Standard Body Copy */
+    --font-size-md: var(--size-5); /* 20px - H3 / UI Elements */
+    --font-size-lg: var(--size-6); /* 24px - H2 Subheadings */
+    --font-size-xl: var(--size-7); /* 32px - H1 Main Title */
+
+    /* Explicit Accessible Line Heights */
+    --line-height-tight: 1.25; /* Snaps ~32px sizing to 40px bounding box */
+    --line-height-base: 1.5; /* Snaps 16px text perfectly to a 24px rhythm */
+    --line-height-loose: 1.625; /* Relaxed reading for long-form text blocks */
+
+    /* --- Core Backgrounds & Surfaces --- */
+    --bg-base: light-dark(#ffffff, #0d0f12);
+    --bg-surface-1: light-dark(#f8fafc, #161920);
+    --bg-surface-2: light-dark(#f1f5f9, #1e232d);
+    --bg-surface-3: light-dark(#e2e8f0, #2a303c);
+
+    /* --- Typography & Foreground Tokens --- */
+    --text-primary: light-dark(#0f172a, #f8fafc);
+    --text-secondary: light-dark(#475569, #94a3b8);
+    --text-muted: light-dark(#64748b, #64748b);
+    --text-inverted: light-dark(#ffffff, #0d0f12);
+
+    /* --- Primary Brand / Accent Tokens --- */
+    --accent: light-dark(#4f46e5, #818cf8);
+    --accent-hover: light-dark(#4338ca, #6366f1);
+    --accent-active: light-dark(#3730a3, #a5b4fc);
+    --accent-subtle: light-dark(#e0e7ff, #1e1b4b);
+    --accent-text: light-dark(#3730a3, #e0e7ff);
+
+    /* --- Secondary / Complementary Accent --- */
+    --accent-secondary: light-dark(#0284c7, #38bdf8);
+    --accent-secondary-subtle: light-dark(#e0f2fe, #082f49);
+
+    /* --- UI States & Feedback --- */
+    --success: light-dark(#16a34a, #4ade80);
+    --success-subtle: light-dark(#dcfce7, #052e16);
+    --warning: light-dark(#d97706, #fbbf24);
+    --warning-subtle: light-dark(#fef3c7, #451a03);
+    --error: light-dark(#dc2626, #f87171);
+    --error-subtle: light-dark(#fee2e2, #450a0a);
+
+    /* --- Borders, Dividers & Focus Rings --- */
+    --border-subtle: light-dark(#e2e8f0, #1e293b);
+    --border-strong: light-dark(#cbd5e1, #334155);
+    --focus-ring: light-dark(rgba(79, 70, 229, 0.4), rgba(129, 140, 248, 0.4));
+
+    /* --- Elevation & Shadows --- */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+}
+
+/* ----------------------------------------------------
+   2. Modern Reset
+   ---------------------------------------------------- */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  html {
+    /* Anchors layout to user font pref and blocks rogue mobiel scaling */
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+
+    /* Native browser theme normalization */
+    color-scheme: light dark;
+  }
+
+  body {
+    /* All visual, thematic, and typographic inheritance starts here */
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+
+    /* Dynamic viewport prevents layout cut-offs on mobile webkit */
+    min-height: 100dvh;
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    color: var(--text-main);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ----------------------------------------------------
+   3. Blog Layout & Spacing (.prose)
+   ---------------------------------------------------- */
+@layer components {
+  .prose {
+    max-inline-size: 68ch;
+    margin-inline: auto;
+    padding-inline: var(--space-2);
+  }
+
+  /* Vertical rhythm for sequential flow elements */
+  .prose > * + * {
+    margin-block-start: var(--space-3);
+  }
+
+  /* Headings spacing */
+  .prose h1,
+  .prose h2,
+  .prose h3 {
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .prose h1 {
+    font-size: 2.25rem;
+    margin-block-start: var(--space-6);
+    margin-block-end: var(--space-3);
+  }
+
+  .prose h2 {
+    font-size: 1.5rem;
+    margin-block-start: var(--space-4);
+    margin-block-end: var(--space-2);
+  }
+
+  .prose h3 {
+    font-size: 1.25rem;
+    margin-block-start: var(--space-3);
+    margin-block-end: var(--space-1);
+  }
+
+  /* Inline Code */
+  .prose :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background-color: var(--bg-subtle);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+  }
+
+  /* Code Blocks */
+  .prose pre {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    padding: var(--space-2);
+    border-radius: 8px;
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+  }
+}
+
+/** TODO: Image behavior, box-sizing reset normalization, fluid layout adjustments across device break points **/

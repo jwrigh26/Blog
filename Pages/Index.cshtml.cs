@@ -19,17 +19,25 @@ public class IndexModel : PageModel
     // Handler called via fetch('/Index?handler=MorePosts&page=2')
     public async Task<IActionResult> OnGetMorePostsAsync(int page = 1)
     {
-        // TRY and Catch needed ? Maybe not? What is best practice?
-        int pageSize = 25;
-        var posts = await GetPostsFromDb(page, pageSize);
-
-        if (!posts.Any())
+        try
         {
-            return StatusCode(204); // Return 204 if no more posts exist
-        }
+            // TRY and Catch needed ? Maybe not? What is best practice?
+            int pageSize = 25;
+            var posts = await GetPostsFromDb(page, pageSize);
 
-        // Returns _BlogPostCard.cshtml partial populated with posts
-        return Partial("_BlogPostCard", posts);
+            if (!posts.Any())
+            {
+                return StatusCode(204); // Return 204 if no more posts exist
+            }
+
+            // Returns _BlogPostCard.cshtml partial populated with posts
+            return Partial("_BlogPostCard", posts);
+        }
+        catch (Exception)
+        {
+            // Log the exception (e.g., _logger.LogError(ex, "failed fetching posts"))
+            return StatusCode(500);
+        }
     }
 
     private async Task<List<BlogPost>> GetPostsFromDb(int page, int pageSize)
@@ -39,21 +47,47 @@ public class IndexModel : PageModel
 
         return Enumerable
             .Range((page - 1) * pageSize + 1, pageSize)
-            .Select(i => new BlogPost
+            .Select(i =>
             {
-                Id = i,
-                Title = $"Blog Post #{i}",
-                Summary = "A deep dive into architecture and web development.",
-                Slug = i % 3 == 0 ? "vue-post" : i % 3 == 1 ? "react-post" : "razor-post"
+                var framework = (i % 3) switch
+                {
+                    0 => FrameworkType.Vue,
+                    1 => FrameworkType.React,
+                    _ => FrameworkType.Razor
+                };
+
+                return new BlogPost
+                {
+                    Id = i,
+                    Title = $"Blog Post #{i}",
+                    Framework = framework,
+                    Slug = i % 3 == 0 ? "vue-post" : i % 3 == 1 ? "react-post" : "razor-post"
+                };
             })
             .ToList();
     }
+}
+
+public enum FrameworkType
+{
+    Unkonwn,
+    Vue,
+    React,
+    Razor
 }
 
 public class BlogPost
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
-    public string Summary { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
+    public FrameworkType Framework { get; set; }
+
+    public string Summary => Framework switch
+    {
+        FrameworkType.Vue => "A demo Vue page.",
+        FrameworkType.React => "A demo React page.",
+        FrameworkType.Razor => "A demo Razor page.",
+        _ => "A web development page."
+    };
 }
