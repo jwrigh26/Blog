@@ -21,12 +21,9 @@
 </head>
 
 <body>
-  <header class="site-header">
-    <nav>
-      <a href="/" class="brand">DevBlog</a>
-      <a href="/">Home</a>
-    </nav>
-  </header>
+  @* Render extracted Navigation Component *@
+  @await Html.PartialAsync("_Navbar")
+
   <main class="main-content">
     @RenderBody()
   </main>
