@@ -39,21 +39,47 @@ public class IndexModel : PageModel
 
         return Enumerable
             .Range((page - 1) * pageSize + 1, pageSize)
-            .Select(i => new BlogPost
+            .Select(i => 
             {
+                var framework = (i % 3) switch
+                {
+                    0 => FrameworkType.Vue,
+                    1 => FrameworkType.React,
+                    _ => FrameworkType.Razor
+                };
+
+                return new BlogPost
+                {
                 Id = i,
                 Title = $"Blog Post #{i}",
-                Summary = "A deep dive into architecture and web development.",
+                Framework = framework,
                 Slug = i % 3 == 0 ? "vue-post" : i % 3 == 1 ? "react-post" : "razor-post"
+                };
             })
             .ToList();
     }
+}
+
+public enum FrameworkType
+{
+    Unkonwn,
+    Vue,
+    React,
+    Razor
 }
 
 public class BlogPost
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
-    public string Summary { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
+    public FrameworkType Framework { get; set; }
+
+    public string Summary => Framework switch
+    {
+        FrameworkType.Vue => "A demo Vue page.",
+        FrameworkType.React => "A demo React page.",
+        FrameworkType.Razor => "A demo Razor page.",
+        _ => "A web development page."
+    };
 }
