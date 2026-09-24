@@ -1,0 +1,27 @@
+@layer components {
+  pre code {
+    color: var(--text-main);
+  }
+
+  /* Syntax Highlighting Tokens */
+  .hl-keyword {
+    color: light-dark(#cf222e, #c76565);
+    font-weight: 600;
+  }
+  .hl-string {
+    color: light-dark(#0a3069, #799bbb);
+  }
+  .hl-comment {
+    color: light-dark(#6e7781, #707a85);
+    font-style: italic;
+  }
+  .hl-type {
+    color: light-dark(#953800, #c28253);
+  }
+  .hl-number {
+    color: light-dark(#0550ae, #6a95bd);
+  }
+  .hl-method {
+    color: light-dark(#8250df, #a884d6);
+  }
+}
