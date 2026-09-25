@@ -52,30 +52,49 @@
     --bg-surface-2: light-dark(#f1f5f9, #1e232d);
     --bg-surface-3: light-dark(#e2e8f0, #2a303c);
 
+    /* --- Base Canvas (The Refraction Darkroom & Clean Studio) --- */
+    --canvas-bg: light-dark(#fafafa, #0a0a0f);
+    --canvas-card: light-dark(#ffffff, #12121a);
+    --canvas-border: light-dark(#e4e4e7, #27273a);
+
     /* --- Typography & Foreground Tokens --- */
     --text-primary: light-dark(#0f172a, #f8fafc);
     --text-secondary: light-dark(#475569, #94a3b8);
     --text-muted: light-dark(#64748b, #64748b);
     --text-inverted: light-dark(#ffffff, #0d0f12);
 
-    /* --- Primary Brand / Accent Tokens --- */
-    --accent: light-dark(#4f46e5, #818cf8);
-    --accent-hover: light-dark(#4338ca, #6366f1);
-    --accent-active: light-dark(#3730a3, #a5b4fc);
-    --accent-subtle: light-dark(#e0e7ff, #1e1b4b);
-    --accent-text: light-dark(#3730a3, #e0e7ff);
+    /* --- 1. Prism Core (Turquoise / Cyan) --- */
+    /* Primary brand anchor, links, main buttons, code highlights */
+    --prism-core: light-dark(#0891b2, #22d3ee);
+    --prism-core-hover: light-dark(#0e7490, #67e8f9);
+    --prism-core-subtle: light-dark(#cffafe, #164e63);
+    --prism-core-text: light-dark(#155e75, #a5f3fc);
 
-    /* --- Secondary / Complementary Accent --- */
-    --accent-secondary: light-dark(#0284c7, #38bdf8);
-    --accent-secondary-subtle: light-dark(#e0f2fe, #082f49);
+    /* --- 2. Spectral Magenta (Vivid Rose) --- */
+    /* Secondary accent for pill tags, active states, callouts */
+    --spectral-flash: light-dark(#be185d, #f43f5e);
+    --spectral-flash-subtle: light-dark(#ffe4e6, #881337);
+
+    /* --- 3. Ray Amber (Solar Gold) --- */
+    /* Tertiary accent for code diffs, badges, warning highlights */
+    --ray-amber: light-dark(#b45309, #fbbf24);
+    --ray-amber-subtle: light-dark(#fef3c7, #78350f);
 
     /* --- UI States & Feedback --- */
-    --success: light-dark(#16a34a, #4ade80);
-    --success-subtle: light-dark(#dcfce7, #052e16);
-    --warning: light-dark(#d97706, #fbbf24);
-    --warning-subtle: light-dark(#fef3c7, #451a03);
-    --error: light-dark(#dc2626, #f87171);
-    --error-subtle: light-dark(#fee2e2, #450a0a);
+    /* Emerald Success: Kept distinct from prism cyan to avoid UI semantic confusion */
+    --success: light-dark(#059669, #34d399);
+    --success-subtle: light-dark(#d1fae5, #064e3b);
+    --success-text: light-dark(#065f46, #a7f3d0);
+
+    /* Solar Amber Warning: Aligned with your --ray-amber token */
+    --warning: light-dark(#b45309, #fbbf24);
+    --warning-subtle: light-dark(#fef3c7, #78350f);
+    --warning-text: light-dark(#78350f, #fde68a);
+
+    /* Crimson/Ruby Error: Harmonized with your --spectral-flash magenta accent */
+    --error: light-dark(#be123c, #f43f5e);
+    --error-subtle: light-dark(#ffe4e6, #881337);
+    --error-text: light-dark(#881337, #fecdd3);
 
     /* --- Borders, Dividers & Focus Rings --- */
     --border-subtle: light-dark(#e2e8f0, #1e293b);
@@ -111,8 +130,8 @@
 
   body {
     /* All visual, thematic, and typographic inheritance starts here */
-    background-color: var(--bg-surface);
-    color: var(--text-main);
+    background-color: var(--bg-surface-1);
+    color: var(--text-primary);
     font-family: var(--font-sans);
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
@@ -127,7 +146,7 @@
   h3,
   h4 {
     text-wrap: balance;
-    color: var(--text-main);
+    color: var(--text-primary);
   }
 
   p {
@@ -142,12 +161,12 @@
   .prose {
     max-inline-size: 68ch;
     margin-inline: auto;
-    padding-inline: var(--space-2);
+    padding-inline: var(--size-2);
   }
 
   /* Vertical rhythm for sequential flow elements */
   .prose > * + * {
-    margin-block-start: var(--space-3);
+    margin-block-start: var(--size-3);
   }
 
   /* Headings spacing */
@@ -160,27 +179,27 @@
 
   .prose h1 {
     font-size: 2.25rem;
-    margin-block-start: var(--space-6);
-    margin-block-end: var(--space-3);
+    margin-block-start: var(--size-6);
+    margin-block-end: var(--size-3);
   }
 
   .prose h2 {
     font-size: 1.5rem;
-    margin-block-start: var(--space-4);
-    margin-block-end: var(--space-2);
+    margin-block-start: var(--size-4);
+    margin-block-end: var(--size-2);
   }
 
   .prose h3 {
     font-size: 1.25rem;
-    margin-block-start: var(--space-3);
-    margin-block-end: var(--space-1);
+    margin-block-start: var(--size-3);
+    margin-block-end: var(--size-1);
   }
 
   /* Inline Code */
   .prose :not(pre) > code {
     font-family: var(--font-mono);
     font-size: 0.875em;
-    background-color: var(--bg-subtle);
+    background-color: var(--bg-base);
     padding: 0.2em 0.4em;
     border-radius: 4px;
     border: 1px solid var(--border-color);
@@ -192,9 +211,22 @@
     font-size: 0.9rem;
     padding: var(--space-2);
     border-radius: 8px;
-    background-color: var(--bg-subtle);
-    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface-2);
+    border: 1px solid var(--border-subtle);
     overflow-x: auto;
+  }
+}
+/* 2. View Transition Rules (Kept independent at the top level) */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  /* Smooth cross-page transition styling */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    /* You can even use your layer variables here! */
+    animation-duration: 0.2s;
   }
 }
 

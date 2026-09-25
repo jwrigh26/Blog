@@ -1,35 +1,30 @@
 <!<!DOCTYPE>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Enable smooth cross-document page transition in moder browsers -->
+    <!-- <meta name="view-transition" content="same-origin" /> -->
+    <title>@ViewData["Title"] - My Dev Blog</title>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Enable smooth cross-document page transition in moder browsers -->
-  <meta name="view-transition" content="same-origin" />
-  <title>@ViewData["Title"] - My Dev Blog</title>
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-  href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
-  rel="stylesheet">
+    <!-- Global Stylesheets referencing the wwwroot/css directory -->
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/syntax.css" asp-append-version="true" />
+  </head>
 
-  <!-- Global Stylesheets referencing the wwwroot/css directory -->
-  <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-  <link rel="stylesheet" href="~/css/syntax.css" asp-append-version="true" />
-</head>
+  <body>
+    @* Render extracted Navigation Component *@ @await Html.PartialAsync("_Navbar")
 
-<body>
-  @* Render extracted Navigation Component *@
-  @await Html.PartialAsync("_Navbar")
+    <main class="main-content">@RenderBody()</main>
 
-  <main class="main-content">
-    @RenderBody()
-  </main>
-
-  @await RenderSectionAsync("Scripts", required: false)
-</body>
-
+    @await RenderSectionAsync("Scripts", required: false)
+  </body>
 </html>
-
